@@ -9,8 +9,17 @@ describe('Autocomplete da Amazon', () => {
     cy.get('.s-suggestion')
       .should('be.visible')
       .then(($suggestions) => {
+        const text = [...$suggestions].map(texto => texto.innerText)
         expect($suggestions.length).to.be.greaterThan(0);
-        console.log('Itens:', $suggestions)
+        cy.log('usando map Itens:\n' + text.join('\n'));
+
+        Cypress._.each($suggestions, (text, index) => {
+          cy.log(`usando Cypress._.each: ${text.innerText}`)
+        })
+
+        $suggestions.each((index, text) => {
+          cy.log(`usando each: ${text.innerText}`)
+        });
       });
   });
 });
